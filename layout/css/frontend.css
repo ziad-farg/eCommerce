@@ -1,0 +1,204 @@
+/* Start global Style */
+
+body {
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 3000px;
+}
+
+.astrisk {
+    position: absolute;
+    right: 13px;
+    top: 38px;
+    font-size: 25px;
+    color: #bf1e1e;
+}
+
+h1 {
+    color: rgb(146, 143, 143);
+    padding: 40px 0px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.active {
+    color: red;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.card-home {
+    position: relative;
+}
+
+.card-home .price-tag {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 1px 6px;
+    background-color: #EEF;
+    border-radius: 8px;
+}
+
+
+/* End global Style */
+
+
+/* Start Upper Nav Page */
+
+.upper-nav img {
+    width: 50px;
+    height: 50px;
+}
+
+
+/* End Upper Nav Page */
+
+
+/* Start Main Nav */
+
+.main-nav .arrow {
+    position: relative;
+    top: 0;
+    left: -10px;
+}
+
+.main-nav .dropdown-menu {
+    left: -86px;
+}
+
+
+/* End Main Nav */
+
+
+/* Start Login Page*/
+
+.head span {
+    cursor: pointer;
+}
+
+.head [data-class="login"].active {
+    color: #007bff;
+}
+
+.head [data-class="signup"].active {
+    color: #28a745;
+}
+
+.signup {
+    display: none;
+}
+
+.form-group {
+    position: relative;
+}
+
+
+/* End Login Page */
+
+
+/* Start home Page */
+
+.home-item img {
+    width: 100%;
+    height: 242px;
+}
+
+
+/* End Home Page */
+
+
+/* start profile page */
+
+.info ul span {
+    display: inline-block;
+    width: 150px;
+}
+
+.info ul li {
+    padding: 7px;
+}
+
+.info ul li:nth-child(odd) {
+    background-color: #ccc;
+}
+
+.info img {
+    width: 100%;
+    height: 250px;
+}
+
+.card-home .date {
+    color: #AAA;
+    font-weight: bold;
+    text-align: right;
+    font-size: 13px;
+}
+
+.card-home .approve-ad {
+    background-color: #e76767;
+    position: absolute;
+    padding: 3px;
+    top: 37px;
+    border-radius: 4px;
+}
+
+.card-home .description {
+    height: 50px;
+    max-height: 50px;
+}
+
+
+/* end profile page */
+
+
+/* start item page */
+
+.main-item img {
+    width: 177px;
+    height: 288px;
+}
+
+.item-info a+b:last-of-type {
+    display: none;
+}
+
+.item-info ul span {
+    display: inline-block;
+    width: 80px;
+}
+
+.item-info ul li {
+    padding: 7px;
+}
+
+.item-info ul li:nth-child(odd) {
+    background-color: #ccc;
+}
+
+.comment textarea {
+    width: 600px;
+}
+
+.comment-box .com-user {
+    margin-top: 6px;
+}
+
+.comment-box p {
+    margin: 18px 0;
+    background-color: #cfcfcf;
+    border-radius: 10px;
+}
+
+.comment-box img {
+    width: 70px;
+    height: 70px;
+}
+
+
+/* end item page */

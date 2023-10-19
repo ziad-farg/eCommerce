@@ -1,0 +1,12 @@
+=======================
+== function document ==
+=======================
+
+[1] getAllFrom
+
+- getAllFrom($faild, $table, $where = null, $orderFaild, $ordering = 'DESC');
+- we can leave the varaible $where [null] if we don't need this varaible.
+- the request get all information from database DESC by default
+  if you want ASC write this of the postion the varaible oredering.
+
+==========================================
