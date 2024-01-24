@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 16, 2022 at 01:27 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.1.2
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 23, 2024 at 12:48 AM
+-- Server version: 8.0.31
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,19 @@ SET time_zone = "+00:00";
 -- Table structure for table `categories`
 --
 
-CREATE TABLE `categories` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL COMMENT 'name of categories',
   `Description` text NOT NULL COMMENT 'description categories',
-  `parent` int(11) NOT NULL,
-  `Ordring` int(11) DEFAULT NULL COMMENT 'ordering of me for items',
-  `Visiblity` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'hidden / show',
-  `Comment` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'allow comment',
-  `Ads` int(11) NOT NULL DEFAULT 0 COMMENT 'allow Ads'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `parent` int NOT NULL,
+  `Ordring` int DEFAULT NULL COMMENT 'ordering of me for items',
+  `Visiblity` tinyint NOT NULL DEFAULT '0' COMMENT 'hidden / show',
+  `Comment` tinyint NOT NULL DEFAULT '0' COMMENT 'allow comment',
+  `Ads` int NOT NULL DEFAULT '0' COMMENT 'allow Ads',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `categories`
@@ -59,22 +62,18 @@ INSERT INTO `categories` (`ID`, `Name`, `Description`, `parent`, `Ordring`, `Vis
 -- Table structure for table `comments`
 --
 
-CREATE TABLE `comments` (
-  `C_ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE IF NOT EXISTS `comments` (
+  `C_ID` int NOT NULL AUTO_INCREMENT,
   `Comments` text NOT NULL,
-  `Status` tinyint(4) NOT NULL DEFAULT 0,
+  `Status` tinyint NOT NULL DEFAULT '0',
   `C_Date` date NOT NULL,
-  `Item_ID` int(11) NOT NULL,
-  `User_ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`C_ID`, `Comments`, `Status`, `C_Date`, `Item_ID`, `User_ID`) VALUES
-(1, 'this is the good game', 1, '2022-01-25', 2, 46),
-(3, 'this is the best game in 2021\r\n', 1, '2022-01-26', 2, 58);
+  `Item_ID` int NOT NULL,
+  `User_ID` int NOT NULL,
+  PRIMARY KEY (`C_ID`),
+  KEY `User_Comment` (`User_ID`),
+  KEY `Item_Comment` (`Item_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -82,28 +81,25 @@ INSERT INTO `comments` (`C_ID`, `Comments`, `Status`, `C_Date`, `Item_ID`, `User
 -- Table structure for table `items`
 --
 
-CREATE TABLE `items` (
-  `Item_ID` int(11) NOT NULL,
-  `Name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Description` text CHARACTER SET utf8 NOT NULL,
-  `Price` varchar(255) CHARACTER SET utf8 NOT NULL,
+DROP TABLE IF EXISTS `items`;
+CREATE TABLE IF NOT EXISTS `items` (
+  `Item_ID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Price` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `Add_Date` date NOT NULL,
-  `Country_Made` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Image` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Status` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Rating` tinyint(4) NOT NULL,
-  `Approved` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Approved Items',
-  `Cat_ID` int(11) NOT NULL,
-  `Member_ID` int(11) NOT NULL,
-  `tags` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `items`
---
-
-INSERT INTO `items` (`Item_ID`, `Name`, `Description`, `Price`, `Add_Date`, `Country_Made`, `Image`, `Status`, `Rating`, `Approved`, `Cat_ID`, `Member_ID`, `tags`) VALUES
-(2, 'Mortal Compate', 'This Is The Best Game Saller In 2021', '20', '2022-01-25', 'USA', '920351_MV5BY2ZlNWIxODMtN2YwZi00ZjNmLWIyN2UtZTFkYmZkNDQyNTAyXkEyXkFqcGdeQXVyODkzNTgxMDg@._V1_.jpg', '1', 0, 1, 24, 60, 'discount, RBG');
+  `Country_Made` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Image` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Status` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Rating` tinyint NOT NULL,
+  `Approved` tinyint NOT NULL DEFAULT '0' COMMENT 'Approved Items',
+  `Cat_ID` int NOT NULL,
+  `Member_ID` int NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`Item_ID`),
+  KEY `cat_1` (`Cat_ID`),
+  KEY `member_1` (`Member_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -111,18 +107,21 @@ INSERT INTO `items` (`Item_ID`, `Name`, `Description`, `Price`, `Add_Date`, `Cou
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `UserID` int(11) NOT NULL COMMENT 'ID User',
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `UserID` int NOT NULL AUTO_INCREMENT COMMENT 'ID User',
   `UserName` varchar(255) NOT NULL COMMENT 'User Name',
   `Pass` varchar(255) NOT NULL COMMENT 'Password',
   `Email` varchar(255) NOT NULL COMMENT 'E-mail',
   `FullName` varchar(255) NOT NULL COMMENT 'Full Name',
-  `avatar` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `GroupID` int(11) NOT NULL DEFAULT 0 COMMENT 'Permition',
-  `TrustStatus` int(11) NOT NULL DEFAULT 0 COMMENT 'Rank',
-  `RegStatus` int(11) NOT NULL DEFAULT 0 COMMENT 'Approve',
-  `DateEntry` date NOT NULL COMMENT 'Date Of Entry'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `avatar` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `GroupID` int NOT NULL DEFAULT '0' COMMENT 'Permition',
+  `TrustStatus` int NOT NULL DEFAULT '0' COMMENT 'Rank',
+  `RegStatus` int NOT NULL DEFAULT '0' COMMENT 'Approve',
+  `DateEntry` date NOT NULL COMMENT 'Date Of Entry',
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `UserName` (`UserName`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -143,69 +142,7 @@ INSERT INTO `users` (`UserID`, `UserName`, `Pass`, `Email`, `FullName`, `avatar`
 (56, 'noor', '601f1889667efaebb33b8c12572835da3f027f78', 'noor@gmail.com', '', '', 0, 0, 0, '2021-12-23'),
 (57, 'alaa', '601f1889667efaebb33b8c12572835da3f027f78', 'alaa@gmial.com', '', '', 0, 0, 1, '2021-12-23'),
 (58, 'yahia', '601f1889667efaebb33b8c12572835da3f027f78', 'yahia@gmial.com', 'yahia yasser', '623439_Jellyfish.jpg', 0, 0, 1, '2022-01-19'),
-(60, 'soso', '601f1889667efaebb33b8c12572835da3f027f78', 'soso@gmail.com', '', '', 0, 0, 1, '2022-01-24');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Name` (`Name`);
-
---
--- Indexes for table `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`C_ID`),
-  ADD KEY `User_Comment` (`User_ID`),
-  ADD KEY `Item_Comment` (`Item_ID`);
-
---
--- Indexes for table `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`Item_ID`),
-  ADD KEY `cat_1` (`Cat_ID`),
-  ADD KEY `member_1` (`Member_ID`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`UserID`),
-  ADD UNIQUE KEY `UserName` (`UserName`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT for table `comments`
---
-ALTER TABLE `comments`
-  MODIFY `C_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `items`
---
-ALTER TABLE `items`
-  MODIFY `Item_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID User', AUTO_INCREMENT=61;
+(61, 'admin', '7af2d10b73ab7cd8f603937f7697cb5fe432c7ff', 'admin@gmail.com', '', '', 1, 1, 1, '2024-01-22');
 
 --
 -- Constraints for dumped tables

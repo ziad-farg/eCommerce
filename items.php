@@ -64,7 +64,7 @@
                         <?php 
                             // check if user exist show the form else show the msg login or regeister
                             if (isset($_SESSION['user'])) {
-                               if ($item['UserName'] != $_SESSION['user']) {    
+                                if ($item['UserName'] != $_SESSION['user']) {    
                                     ?>
                                     <div class="comment">
                                         <!-- form text area -->
@@ -99,7 +99,7 @@
                                         ?>
                                     </div>
                                     <?php 
-                                        } 
+                                    } 
                                     ?>
                     </div>
                 </div>
